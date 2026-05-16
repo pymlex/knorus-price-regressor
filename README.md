@@ -47,14 +47,14 @@ The dataset [`pymlex/knorus-price-list`](https://huggingface.co/datasets/pymlex/
 
 The target is `Цена (руб.)`, modelled in `log1p(price)` space to reduce skew and handle expensive books not as outliers. Uninformative columns are dropped: `Код издания`, `Автор`, `ISBN`, `Ссылка на ЭБС`. The remaining fields are processed as follows:
 
-* `Название` – core title extracted (trailing template removed) and merged with `Аннотация` into a single semantic block.
-* `Гриф` → binary flag.
-* `Обл/пер` → 0/1 feature.
+* `Название` – core title extracted and merged with `Аннотация` into a single semantic block.
+* `Гриф` is a binary flag.
+* `Обл/пер` is also a 0/1 feature.
 * `Год издания`, `Кол-во страниц` – numeric, standardized.
 * `Формат` – split into three numeric parts (width, height, denominator).
 * `Вид издания` and `Издательство` – one‑hot encoded.
 * `Серия` – multi‑hot encoding.
-* `Дисциплина` and `Тематика` – embedded with Qwen (`Qwen/Qwen3.5-0.8B-Base`), row‑wise averaged, then compressed with PCA (64 components each).
+* `Дисциплина` and `Тематика` – embedded with Qwen `Qwen/Qwen3.5-0.8B-Base`, row‑wise averaged, then compressed with PCA 64 components each.
 * `Название + Аннотация` – embedded with the same Qwen model, compressed to 128 components after checking 95% explained variance.
 
 ### Target distribution
